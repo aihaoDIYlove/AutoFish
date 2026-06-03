@@ -1,0 +1,147 @@
+<Window x:Class="AutoFish.ToolbarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Title="AutoFish 工具栏"
+        MouseLeftButtonDown="Window_Drag">
+
+    <Border Background="#CC181830"
+            CornerRadius="14"
+            Padding="14,10"
+            BorderBrush="#333355"
+            BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="20" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <!-- 状态点 -->
+                <Ellipse x:Name="StatusDot" Width="9" Height="9"
+                         Fill="#FF4444" Margin="0,0,10,0" VerticalAlignment="Center">
+                    <Ellipse.Effect>
+                        <DropShadowEffect Color="#FF4444" BlurRadius="6" ShadowDepth="0" Opacity="0.8"/>
+                    </Ellipse.Effect>
+                </Ellipse>
+
+                <!-- ▶ 开始检测 -->
+                <Button x:Name="BtnToggle" Content="▶ 开始检测"
+                        Width="110" Height="30" FontSize="11" FontWeight="SemiBold"
+                        FontFamily="Segoe UI" Margin="0,0,4,0"
+                        Click="BtnToggle_Click" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#4A4AFF"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                CornerRadius="8" Padding="12,6">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- 框选区 -->
+                <Button x:Name="BtnSelect" Content="框选区"
+                        Width="70" Height="30" FontSize="11" FontFamily="Segoe UI"
+                        Margin="0,0,4,0" Click="BtnSelect_Click" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#2A2A45"/>
+                            <Setter Property="Foreground" Value="#CCCCCC"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                CornerRadius="8" Padding="10,6">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#363660"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- ⚙ -->
+                <Button x:Name="BtnSettings" Content="⚙"
+                        Width="36" Height="30" FontSize="14" FontFamily="Segoe UI"
+                        Margin="0,0,4,0" Click="BtnSettings_Click" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#2A2A45"/>
+                            <Setter Property="Foreground" Value="#CCCCCC"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                CornerRadius="8" Padding="8,6">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#363660"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- ━ 隐藏 -->
+                <Button x:Name="BtnHide" Content="━"
+                        Width="36" Height="30" FontSize="14" FontFamily="Segoe UI"
+                        Click="BtnHide_Click" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#2A2A45"/>
+                            <Setter Property="Foreground" Value="#CC6666"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                CornerRadius="8" Padding="8,6">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4A3030"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+
+            <!-- 状态行 -->
+            <TextBlock x:Name="StateLabel" Text="未钓鱼 — 请手动抛竿"
+                       Foreground="#8888CC" FontSize="11" FontFamily="Segoe UI" Margin="0,8,0,0"/>
+        </StackPanel>
+    </Border>
+</Window>
