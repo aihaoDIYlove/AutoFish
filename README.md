@@ -20,7 +20,7 @@
 ## 构建
 
 ```powershell
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+dotnet publish -c Release -r win-x64 --self-contained true
 ```
 
 输出：`bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/AutoFish.exe`
