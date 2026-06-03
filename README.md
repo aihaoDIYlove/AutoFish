@@ -90,4 +90,4 @@ AutoFish/
 
 ## ui展示
 
-![ui](img\ui.webp)
+![ui](https://github.com/aihaoDIYlove/AutoFish/blob/main/img/ui.webp)
