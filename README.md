@@ -25,14 +25,19 @@ dotnet publish -c Release -r win-x64 --self-contained true
 
 输出：`bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/AutoFish.exe`
 
+## 下载
+
+- [v1.0.0 点此跳转](https://github.com/aihaoDIYlove/AutoFish/releases/tag/v1.0.0)
+
 ## 使用
 
 1. 启动 `AutoFish.exe`
 2. 将游戏窗口置于前台
-3. `Ctrl+Shift+S` 进入框选模式，拖拽选中游戏内显示钓鱼提示的区域（如"溅起水花""甩出"等文字）
-4. 按 `Enter` 确认选区
-5. `Ctrl+Shift+F` 开始检测
-6. 在游戏中手动抛竿，AutoFish 会自动识别咬钩并右键提竿，收回后自动重抛
+3. 确保游戏内 选项 -> 辅助功能设置 -> 隐藏式字幕 选项为 "开"
+4. `Ctrl+Shift+S` 进入框选模式，拖拽选中游戏内显示钓鱼提示的区域（如"溅起水花""甩出"等文字）
+5. 按 `Enter` 确认选区
+6. `Ctrl+Shift+F` 开始检测
+7. 在游戏中手动抛竿，AutoFish 会自动识别咬钩并右键提竿，收回后自动重抛
 
 ### 热键
 
