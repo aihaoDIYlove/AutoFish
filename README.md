@@ -87,3 +87,7 @@ AutoFish/
 ## 配置存储
 
 配置文件位于 `%AppData%/AutoFish/settings.json`，日志位于 `%AppData%/AutoFish/log.txt`。
+
+## ui展示
+
+![ui](img\ui.png)
