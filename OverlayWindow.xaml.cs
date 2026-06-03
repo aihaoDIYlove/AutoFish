@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -34,7 +34,7 @@ public partial class OverlayWindow : Window
     public OverlayWindow()
     {
         InitializeComponent();
-        Logger.Info("OverlayWindow 完成");
+        Logger.Info("OverlayWindow 瀹屾垚");
 
         _settingsService = new SettingsService();
         _settingsService.Load();
@@ -106,7 +106,7 @@ public partial class OverlayWindow : Window
         double labelX = x, labelY = y - 28;
         if (labelY < 0) labelY = y + h + 6;
         SizeLabel.Margin = new Thickness(labelX, labelY, 0, 0);
-        SizeLabelText.Text = $"{_settings.CaptureWidth} × {_settings.CaptureHeight}";
+        SizeLabelText.Text = $"{_settings.CaptureWidth} 脳 {_settings.CaptureHeight}";
     }
 
     private void ShowHandles(bool show)
@@ -133,7 +133,7 @@ public partial class OverlayWindow : Window
         SetClickThrough(false);
         Cursor = Cursors.Cross;
 
-        SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xCC, 0x00));
+        SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0x9F, 0x0A));
         SelectionBorder.StrokeDashArray = null;
         SelectionBorder.StrokeThickness = 3;
 
@@ -155,7 +155,7 @@ public partial class OverlayWindow : Window
         _dragMode = DragMode.None;
         Cursor = Cursors.Arrow;
 
-        SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xFF, 0x88));
+        SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x30, 0xD1, 0x58));
         SelectionBorder.StrokeDashArray = new DoubleCollection { 6, 3 };
         SelectionBorder.StrokeThickness = 2;
 
@@ -196,7 +196,7 @@ public partial class OverlayWindow : Window
         SetClickThrough(true);
         Cursor = Cursors.Arrow;
 
-        SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xFF, 0x88));
+        SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x30, 0xD1, 0x58));
         SelectionBorder.StrokeDashArray = new DoubleCollection { 6, 3 };
         SelectionBorder.StrokeThickness = 2;
 
@@ -241,7 +241,7 @@ public partial class OverlayWindow : Window
         _settings.CaptureHeight = (int)((y2 - y1) * _dpiScaleY);
         UpdateSelectionVisual();
         SizeLabel.Visibility = Visibility.Visible;
-        SizeLabelText.Text = $"{_settings.CaptureWidth} × {_settings.CaptureHeight}";
+        SizeLabelText.Text = $"{_settings.CaptureWidth} 脳 {_settings.CaptureHeight}";
     }
 
     private void OnDrawMouseUp(object sender, MouseButtonEventArgs e)
@@ -375,7 +375,7 @@ public partial class OverlayWindow : Window
     {
         if (!_showDebug) return;
         Dispatcher.Invoke(() =>
-            DebugText.Text = string.IsNullOrWhiteSpace(text) ? "(空)" : text);
+            DebugText.Text = string.IsNullOrWhiteSpace(text) ? "(绌?" : text);
     }
 
     private void OnDebugInfo(string msg)

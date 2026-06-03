@@ -66,12 +66,12 @@ public partial class ToolbarWindow : Window
             if (running)
             {
                 BtnToggle.Content = "⏸ 停止检测";
-                StatusDot.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xFF, 0x44));
+                StatusDot.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0x30, 0xD1, 0x58));
             }
             else
             {
                 BtnToggle.Content = "▶ 开始检测";
-                StatusDot.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0x44, 0x44));
+                StatusDot.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0x45, 0x3A));
             }
         });
     }

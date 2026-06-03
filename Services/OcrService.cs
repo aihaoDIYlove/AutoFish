@@ -9,6 +9,15 @@ public class OcrService
     private int _engineThreadId = -1;
     private readonly object _engineLock = new();
 
+    public bool IsAvailable
+    {
+        get
+        {
+            TryEnsureEngine();
+            return _engine != null;
+        }
+    }
+
     public OcrService()
     {
         TryEnsureEngine();

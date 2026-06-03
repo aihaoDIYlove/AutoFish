@@ -20,7 +20,7 @@
                         <Border Background="Transparent" CornerRadius="3">
                             <Track x:Name="PART_Track" IsDirectionReversed="True">
                                 <Track.Thumb>
-                                    <Thumb Background="#444466" Width="6">
+                                    <Thumb Background="#48484A" Width="6">
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="Thumb">
                                                 <Border Background="{TemplateBinding Background}"
@@ -37,12 +37,12 @@
         </Style>
 
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#E8E8E8"/>
+            <Setter Property="Foreground" Value="#EBEBF5"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
         <Style x:Key="SubText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#999"/>
+            <Setter Property="Foreground" Value="#98989D"/>
             <Setter Property="FontSize" Value="11"/>
         </Style>
         <Style x:Key="HeaderText" TargetType="TextBlock">
@@ -52,11 +52,11 @@
             <Setter Property="Margin" Value="0,0,0,10"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#1C1C2E"/>
-            <Setter Property="Foreground" Value="#E8E8E8"/>
-            <Setter Property="BorderBrush" Value="#33334D"/>
+            <Setter Property="Background" Value="#2C2C2E"/>
+            <Setter Property="Foreground" Value="#EBEBF5"/>
+            <Setter Property="BorderBrush" Value="#48484A"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CaretBrush" Value="#6C6CFF"/>
+            <Setter Property="CaretBrush" Value="#0A84FF"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Padding" Value="8,4"/>
@@ -75,7 +75,7 @@
             </Setter>
         </Style>
         <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="#E8E8E8"/>
+            <Setter Property="Foreground" Value="#EBEBF5"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="0,6,0,0"/>
@@ -107,8 +107,8 @@
         </Style>
     </Window.Resources>
 
-    <Border CornerRadius="16" Background="#E8181832"
-            BorderBrush="#333355" BorderThickness="1" Margin="4">
+    <Border CornerRadius="16" Background="#E81C1C1E"
+            BorderBrush="#3A3A3C" BorderThickness="1" Margin="4">
         <Border.Effect>
             <DropShadowEffect Color="#000000" BlurRadius="40" ShadowDepth="0" Opacity="0.6"/>
         </Border.Effect>
@@ -120,7 +120,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Background="#1A1A35" CornerRadius="16,16,0,0"
+            <Border Grid.Row="0" Background="#2C2C2E" CornerRadius="16,16,0,0"
                     Padding="20,14" MouseLeftButtonDown="TitleBar_Drag">
                 <Grid>
                     <TextBlock Text="设置" FontSize="17" FontWeight="SemiBold" Foreground="#FFFFFF"/>
@@ -133,7 +133,7 @@
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20,16">
                 <StackPanel>
 
-                    <Border Background="#1C1C35" CornerRadius="12" Padding="20" Margin="0,0,0,14">
+                    <Border Background="#2C2C2E" CornerRadius="12" Padding="20" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Style="{StaticResource HeaderText}" Text="OCR 截图区域"/>
                             <TextBlock Style="{StaticResource SubText}" Text="屏幕坐标，像素值" Margin="0,-6,0,10"/>
@@ -164,7 +164,7 @@
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#1C1C35" CornerRadius="12" Padding="20" Margin="0,0,0,14">
+                    <Border Background="#2C2C2E" CornerRadius="12" Padding="20" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Style="{StaticResource HeaderText}" Text="检测"/>
                             <TextBlock Text="轮询间隔 (ms)" Margin="0,0,0,6"/>
@@ -174,7 +174,7 @@
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#1C1C35" CornerRadius="12" Padding="20" Margin="0,0,0,14">
+                    <Border Background="#2C2C2E" CornerRadius="12" Padding="20" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Style="{StaticResource HeaderText}" Text="识别短语"/>
                             <TextBlock Style="{StaticResource SubText}" Text="逗号分隔多个短语" Margin="0,-6,0,8"/>
@@ -190,7 +190,7 @@
                         </StackPanel>
                     </Border>
 
-                    <Border Background="#1C1C35" CornerRadius="12" Padding="20" Margin="0,0,0,14">
+                    <Border Background="#2C2C2E" CornerRadius="12" Padding="20" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Style="{StaticResource HeaderText}" Text="延迟设置 (ms)"/>
 
@@ -224,13 +224,13 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Border Grid.Row="2" Background="#1A1A35" CornerRadius="0,0,16,16" Padding="20,14">
+            <Border Grid.Row="2" Background="#2C2C2E" CornerRadius="0,0,16,16" Padding="20,14">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="BtnCancel" Content="取消"
-                            Background="Transparent" Foreground="#999" BorderBrush="#444"
+                            Background="Transparent" Foreground="#98989D" BorderBrush="#48484A"
                             Width="80" Height="40" Margin="0,0,10,0" Click="BtnCancel_Click"/>
                     <Button x:Name="BtnSave" Content="保存"
-                            Background="#4A4AFF" Foreground="#FFFFFF" BorderBrush="Transparent"
+                            Background="#0A84FF" Foreground="#FFFFFF" BorderBrush="Transparent"
                             Width="80" Height="40" Click="BtnSave_Click"/>
                 </StackPanel>
             </Border>

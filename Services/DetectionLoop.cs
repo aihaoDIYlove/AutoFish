@@ -54,6 +54,13 @@ public class DetectionLoop : IDisposable
     public void Start()
     {
         if (IsRunning) return;
+        if (!_ocr.IsAvailable)
+        {
+            var msg = "OCR 引擎不可用。\n请安装中文语言包的光学字符识别组件：\n设置 → 时间和语言 → 语言 → 添加语言 → 中文(简体) → 可选功能 → 光学字符识别";
+            DebugInfo?.Invoke(msg);
+            System.Windows.MessageBox.Show(msg, "AutoFish", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+            return;
+        }
         _tickCount = 0;
         _timer.Interval = TimeSpan.FromMilliseconds(_settings.PollingIntervalMs);
         _timer.Start();
