@@ -48,6 +48,7 @@ public class DetectionLoop : IDisposable
             DispatcherPriority.Background,
             OnTick,
             Dispatcher.CurrentDispatcher);
+        _timer.Stop(); // 四参数构造自动启动，显式停止
     }
 
     public void Start()
@@ -66,6 +67,8 @@ public class DetectionLoop : IDisposable
         _timer.Stop();
         IsRunning = false;
         Logger.Info("检测已停止");
+        TextRecognized?.Invoke("");
+        DebugInfo?.Invoke("已停止");
     }
 
     public void ResetStateMachine()

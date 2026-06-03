@@ -133,7 +133,6 @@ public partial class OverlayWindow : Window
         SetClickThrough(false);
         Cursor = Cursors.Cross;
 
-        OverlayPath.Fill = new SolidColorBrush(Color.FromArgb(0x66, 0x00, 0x00, 0x00));
         SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xCC, 0x00));
         SelectionBorder.StrokeDashArray = null;
         SelectionBorder.StrokeThickness = 3;
@@ -197,7 +196,6 @@ public partial class OverlayWindow : Window
         SetClickThrough(true);
         Cursor = Cursors.Arrow;
 
-        OverlayPath.Fill = new SolidColorBrush(Color.FromArgb(0x44, 0x00, 0x00, 0x00));
         SelectionBorder.Stroke = new SolidColorBrush(Color.FromArgb(0xFF, 0x00, 0xFF, 0x88));
         SelectionBorder.StrokeDashArray = new DoubleCollection { 6, 3 };
         SelectionBorder.StrokeThickness = 2;
@@ -251,8 +249,20 @@ public partial class OverlayWindow : Window
         if (!_isDragging) return;
         _isDragging = false;
         ReleaseMouseCapture();
-        if (_settings.CaptureWidth < 10) _settings.CaptureWidth = 10;
-        if (_settings.CaptureHeight < 10) _settings.CaptureHeight = 10;
+
+        if (_settings.CaptureWidth <= 10 && _settings.CaptureHeight <= 10 && _savedRect.Width > 10)
+        {
+            _settings.CaptureX = (int)_savedRect.X;
+            _settings.CaptureY = (int)_savedRect.Y;
+            _settings.CaptureWidth = (int)_savedRect.Width;
+            _settings.CaptureHeight = (int)_savedRect.Height;
+        }
+        else
+        {
+            if (_settings.CaptureWidth < 10) _settings.CaptureWidth = 10;
+            if (_settings.CaptureHeight < 10) _settings.CaptureHeight = 10;
+        }
+
         UpdateSelectionVisual();
         EnterAdjustMode();
     }

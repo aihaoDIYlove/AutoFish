@@ -96,7 +96,11 @@ public class FishingStateMachine
             _lastHookTime = now;
             RightClickRequested?.Invoke(string.Join(", ", textLines));
             TransitionTo(FishingState.ReelingIn, "检测到咬钩");
+            return;
         }
+
+        if (MatchesAny(textLines, _settings.ReelPhrases))
+            TransitionTo(FishingState.Idle, "用户主动收杆");
     }
 
     private void ProcessReelingIn(IReadOnlyList<string> textLines)

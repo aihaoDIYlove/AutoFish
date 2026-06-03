@@ -228,10 +228,10 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="BtnCancel" Content="取消"
                             Background="Transparent" Foreground="#999" BorderBrush="#444"
-                            Width="80" Height="36" Margin="0,0,10,0" Click="BtnCancel_Click"/>
+                            Width="80" Height="40" Margin="0,0,10,0" Click="BtnCancel_Click"/>
                     <Button x:Name="BtnSave" Content="保存"
                             Background="#4A4AFF" Foreground="#FFFFFF" BorderBrush="Transparent"
-                            Width="80" Height="36" Click="BtnSave_Click"/>
+                            Width="80" Height="40" Click="BtnSave_Click"/>
                 </StackPanel>
             </Border>
         </Grid>
