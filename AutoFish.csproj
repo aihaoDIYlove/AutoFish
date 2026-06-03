@@ -9,6 +9,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>AutoFish</AssemblyName>
     <StartupObject>AutoFish.App</StartupObject>
+    <Product>AutoFish</Product>
+    <Company>aihaoDIYlove (Personal)</Company>
+    <Copyright>Copyright (c) 2026 aihaoDIYlove</Copyright>
+    <Description>为游戏:minecraft的自动钓鱼工具</Description>
+    <Version>1.0.0</Version>
+    <ApplicationIcon>AutoFish.ico</ApplicationIcon>
     <PublishSingleFile>true</PublishSingleFile>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
