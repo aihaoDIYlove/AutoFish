@@ -90,4 +90,4 @@ AutoFish/
 
 ## ui展示
 
-![ui](img\ui.png)
+![ui](img\ui.webp)
