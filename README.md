@@ -4,7 +4,7 @@
 
 ## ui展示
 
-![ui](https://github.com/aihaoDIYlove/AutoFish/blob/main/img/ui.webp)
+![ui](./img/ui.webp)
 
 ## 想直接用？在此下载
 
