@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using AutoFish.Models;
 using AutoFish.Services;
@@ -33,7 +34,7 @@ public partial class SettingsWindow : Window
         TxtCaptureY.Text = _settings.CaptureY.ToString();
         TxtCaptureW.Text = _settings.CaptureWidth.ToString();
         TxtCaptureH.Text = _settings.CaptureHeight.ToString();
-        TxtPolling.Text = _settings.PollingIntervalMs.ToString();
+        SetPollingRadio(_settings.PollingIntervalMs);
         ChkAutoFish.IsChecked = _settings.AutoFishEnabled;
         ChkDebugLog.IsChecked = _settings.DebugLogOcr;
 
@@ -55,7 +56,7 @@ public partial class SettingsWindow : Window
             _settings.CaptureY = int.Parse(TxtCaptureY.Text);
             _settings.CaptureWidth = int.Parse(TxtCaptureW.Text);
             _settings.CaptureHeight = int.Parse(TxtCaptureH.Text);
-            _settings.PollingIntervalMs = int.Parse(TxtPolling.Text);
+            _settings.PollingIntervalMs = GetPollingValue();
             _settings.AutoFishEnabled = ChkAutoFish.IsChecked == true;
             _settings.DebugLogOcr = ChkDebugLog.IsChecked == true;
 
@@ -82,6 +83,20 @@ public partial class SettingsWindow : Window
     private void BtnCancel_Click(object sender, RoutedEventArgs e)
     {
         Close();
+    }
+
+    private void SetPollingRadio(int ms)
+    {
+        (ms switch { 400 => (RadioButton)Rb400, 330 => Rb330, 200 => Rb200, 125 => Rb125, _ => Rb250 }).IsChecked = true;
+    }
+
+    private int GetPollingValue()
+    {
+        if (Rb125.IsChecked == true) return 125;
+        if (Rb200.IsChecked == true) return 200;
+        if (Rb330.IsChecked == true) return 330;
+        if (Rb400.IsChecked == true) return 400;
+        return 250;
     }
 
     private static List<string> ParsePhrases(string text)

@@ -74,6 +74,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#EBEBF5"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="0,2,0,2"/>
+        </Style>
         <Style TargetType="CheckBox">
             <Setter Property="Foreground" Value="#EBEBF5"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
@@ -167,8 +173,14 @@
                     <Border Background="#2C2C2E" CornerRadius="12" Padding="20" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Style="{StaticResource HeaderText}" Text="检测"/>
-                            <TextBlock Text="轮询间隔 (ms)" Margin="0,0,0,6"/>
-                            <TextBox x:Name="TxtPolling" Width="100" HorizontalAlignment="Left"/>
+                            <TextBlock Text="轮询间隔" Margin="0,0,0,6"/>
+                            <StackPanel Margin="0,0,0,6">
+                                <RadioButton x:Name="Rb400" GroupName="Polling" Content="400ms — 极低开销，概率失败"/>
+                                <RadioButton x:Name="Rb330" GroupName="Polling" Content="330ms — 低开销，可用"/>
+                                <RadioButton x:Name="Rb250" GroupName="Polling" Content="250ms — 均衡，推荐"/>
+                                <RadioButton x:Name="Rb200" GroupName="Polling" Content="200ms — 性能档"/>
+                                <RadioButton x:Name="Rb125" GroupName="Polling" Content="125ms — 高开销，不推荐"/>
+                            </StackPanel>
                             <CheckBox x:Name="ChkAutoFish" Content="启用自动钓鱼"/>
                             <CheckBox x:Name="ChkDebugLog" Content="调试日志：OCR 结果写入 log.txt"/>
                         </StackPanel>
