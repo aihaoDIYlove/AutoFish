@@ -1,6 +1,24 @@
-# AutoFish
+# Minecraft AutoFish
 
 基于 WPF + OCR 的游戏自动钓鱼工具，通过屏幕截图 + Windows 内置 OCR 引擎识别游戏内钓鱼提示文字，模拟右键实现自动提竿和重抛。
+
+## ui展示
+
+![ui](https://github.com/aihaoDIYlove/AutoFish/blob/main/img/ui.webp)
+
+## 想直接用？在此下载
+
+- [ -> v1.0.0](https://github.com/aihaoDIYlove/AutoFish/releases/tag/v1.0.0) 点此跳转
+
+## 使用说明
+
+1. 启动 `AutoFish.exe`
+2. 将游戏窗口置于前台
+3. 确保游戏内 选项 -> 辅助功能设置 -> 隐藏式字幕 选项为 "开"
+4. `Ctrl+Shift+S` 进入框选模式，拖拽选中游戏内显示钓鱼提示的区域（如"溅起水花""甩出"等文字）
+5. 按 `Enter` 确认选区
+6. `Ctrl+Shift+F` 开始检测
+7. 在游戏中手动抛竿，AutoFish 会自动识别咬钩并右键提竿，收回后自动重抛
 
 ## 功能
 
@@ -10,34 +28,6 @@
 - **全局热键** — `Ctrl+Shift+F` 开始/停止，`Ctrl+Shift+S` 框选区域，`Ctrl+Shift+D` 调试面板
 - **系统托盘** — 最小化到托盘，右键菜单打开/退出
 - **可配置参数** — 识别短语、冷却时间、轮询间隔均可调
-
-## 系统要求
-
-- Windows 10 19041+ (Windows 10 2004) 或 Windows 11
-- .NET 8 Desktop Runtime
-- 系统需安装中文 OCR 语言包（设置 → 语言 → 添加语言 → 中文(简体) → 可选功能 → 光学字符识别）
-
-## 构建
-
-```powershell
-dotnet publish -c Release -r win-x64 --self-contained true
-```
-
-输出：`bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/AutoFish.exe`
-
-## 下载
-
-- [v1.0.0 点此跳转](https://github.com/aihaoDIYlove/AutoFish/releases/tag/v1.0.0)
-
-## 使用
-
-1. 启动 `AutoFish.exe`
-2. 将游戏窗口置于前台
-3. 确保游戏内 选项 -> 辅助功能设置 -> 隐藏式字幕 选项为 "开"
-4. `Ctrl+Shift+S` 进入框选模式，拖拽选中游戏内显示钓鱼提示的区域（如"溅起水花""甩出"等文字）
-5. 按 `Enter` 确认选区
-6. `Ctrl+Shift+F` 开始检测
-7. 在游戏中手动抛竿，AutoFish 会自动识别咬钩并右键提竿，收回后自动重抛
 
 ### 热键
 
@@ -59,6 +49,27 @@ dotnet publish -c Release -r win-x64 --self-contained true
 | 抛竿后冷却 | 1200 ms | 抛竿后忽略咬钩检测的时间，避免水花误判 |
 | 收回后重抛 | 800 ms | 收回后自动重抛的延迟 |
 | 咬钩防连点 | 2200 ms | 两次右键提竿的最短间隔 |
+
+### 配置存储
+
+- 配置文件位于 `%AppData%/AutoFish/settings.json`，日志位于 `%AppData%/AutoFish/log.txt`。
+
+## 系统要求
+
+- Windows 10 19041+ (Windows 10 2004) 或 Windows 11
+- .NET 8 Desktop Runtime
+- 系统需安装中文 OCR 语言包（中文用户一般默认有安装）
+
+### 环境验证
+
+1. 右键左下角的Windows徽标，选择 Windews Powershell(管理员) 打开命令行工具
+2. 复制以下内容，回车。
+```powershell
+Get-WindowsCapability -Online | Where-Object { $_.Name -Like 'Language.OCR*zh*' }
+```
+3. 如果 "Name  : Language.OCR~~~zh-CN~0.0.1.0"
+显示为 "State : Installed"
+说明已安装OCR包
 
 ## 项目结构
 
@@ -83,11 +94,10 @@ AutoFish/
     ├── IconGenerator.cs     # 程序化图标生成
     └── Logger.cs            # 文件日志
 ```
+## 构建
 
-## 配置存储
+```powershell
+dotnet publish -c Release -r win-x64 --self-contained true
+```
 
-配置文件位于 `%AppData%/AutoFish/settings.json`，日志位于 `%AppData%/AutoFish/log.txt`。
-
-## ui展示
-
-![ui](https://github.com/aihaoDIYlove/AutoFish/blob/main/img/ui.webp)
+输出：`bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/AutoFish.exe`
