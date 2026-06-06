@@ -277,7 +277,8 @@
                             <Grid HorizontalAlignment="Left" Margin="0,4,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="110"/>
-                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="38"/>
@@ -287,16 +288,24 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="抛竿后冷却" VerticalAlignment="Center"/>
-                                <TextBox x:Name="TxtCastCooldown" Grid.Column="1" Width="90" VerticalAlignment="Center"/>
+                                <TextBox x:Name="TxtCastCooldown" Grid.Column="1" Width="70" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Style="{StaticResource SubText}"
+                                           Text="检测到抛竿后，此时间内不检测咬钩" VerticalAlignment="Center" Margin="8,0,0,0"/>
 
                                 <TextBlock Text="收回后重抛" Grid.Row="1" VerticalAlignment="Center"/>
-                                <TextBox x:Name="TxtRecastDelay" Grid.Row="1" Grid.Column="1" Width="90" VerticalAlignment="Center"/>
+                                <TextBox x:Name="TxtRecastDelay" Grid.Row="1" Grid.Column="1" Width="70" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource SubText}"
+                                           Text="检测到收回后等待此时间，自动右键抛竿" VerticalAlignment="Center" Margin="8,0,0,0"/>
 
                                 <TextBlock Text="右键持续" Grid.Row="2" VerticalAlignment="Center"/>
-                                <TextBox x:Name="TxtClickDuration" Grid.Row="2" Grid.Column="1" Width="90" VerticalAlignment="Center"/>
+                                <TextBox x:Name="TxtClickDuration" Grid.Row="2" Grid.Column="1" Width="70" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="2" Grid.Column="2" Style="{StaticResource SubText}"
+                                           Text="右键按下到抬起的间隔" VerticalAlignment="Center" Margin="8,0,0,0"/>
 
                                 <TextBlock Text="咬钩防连点" Grid.Row="3" VerticalAlignment="Center"/>
-                                <TextBox x:Name="TxtHookCooldown" Grid.Row="3" Grid.Column="1" Width="90" VerticalAlignment="Center"/>
+                                <TextBox x:Name="TxtHookCooldown" Grid.Row="3" Grid.Column="1" Width="70" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="3" Grid.Column="2" Style="{StaticResource SubText}"
+                                           Text="检测到咬钩后，此时间内忽略重复文字" VerticalAlignment="Center" Margin="8,0,0,0"/>
                             </Grid>
                         </StackPanel>
                     </Border>
@@ -316,7 +325,8 @@
                                     <Grid HorizontalAlignment="Left" Margin="0,4,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="110"/>
-                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="38"/>
@@ -324,10 +334,14 @@
                                         </Grid.RowDefinitions>
 
                                         <TextBlock Text="切杆延迟 (ms)" VerticalAlignment="Center"/>
-                                        <TextBox x:Name="TxtSwitchRodDelay" Grid.Column="1" Width="90" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="TxtSwitchRodDelay" Grid.Column="1" Width="70" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Style="{StaticResource SubText}"
+                                                   Text="识别到损坏后，等待此时间再按数字键切杆" VerticalAlignment="Center" Margin="8,0,0,0"/>
 
                                         <TextBlock Text="切杆重抛 (ms)" Grid.Row="1" VerticalAlignment="Center"/>
-                                        <TextBox x:Name="TxtSwitchRodRecast" Grid.Row="1" Grid.Column="1" Width="90" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="TxtSwitchRodRecast" Grid.Row="1" Grid.Column="1" Width="70" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource SubText}"
+                                                   Text="按下数字键后等待此时间，再右键抛竿" VerticalAlignment="Center" Margin="8,0,0,0"/>
                                     </Grid>
                                 </StackPanel>
                             </Border>
