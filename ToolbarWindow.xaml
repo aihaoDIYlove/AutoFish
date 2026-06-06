@@ -140,7 +140,7 @@
             </StackPanel>
 
             <!-- 状态行 -->
-            <TextBlock x:Name="StateLabel" Text="未钓鱼 — 请手动抛竿"
+            <TextBlock x:Name="StateLabel" Text="等待启用检测"
                        Foreground="#98989D" FontSize="11" FontFamily="Segoe UI" Margin="0,8,0,0"/>
         </StackPanel>
     </Border>

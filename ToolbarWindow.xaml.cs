@@ -76,6 +76,7 @@ public partial class ToolbarWindow : Window
             {
                 BtnToggle.Content = "▶ 开始检测";
                 StatusDot.Fill = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0x45, 0x3A));
+                StateLabel.Text = "等待启用检测";
             }
         });
     }
