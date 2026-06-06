@@ -34,7 +34,7 @@ public partial class OverlayWindow : Window
     public OverlayWindow()
     {
         InitializeComponent();
-        Logger.Info("OverlayWindow 瀹屾垚");
+        Logger.Info("OverlayWindow 初始化");
 
         _settingsService = new SettingsService();
         _settingsService.Load();
