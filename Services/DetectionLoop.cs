@@ -10,6 +10,7 @@ public class DetectionLoop : IDisposable
     private readonly OcrService _ocr;
     private readonly InputService _input;
     private readonly FishingStateMachine _fsm;
+    private readonly RodSwitchService _rodSwitch;
     private readonly DispatcherTimer _timer;
     private int _tickCount;
 
@@ -17,6 +18,8 @@ public class DetectionLoop : IDisposable
     public event Action<string>? TextRecognized;
     public event Action<FishingState, FishingState>? FishStateChanged;
     public event Action<string>? DebugInfo;
+
+    public RodSwitchService RodSwitch => _rodSwitch;
 
     private bool _running;
     public bool IsRunning
@@ -32,16 +35,20 @@ public class DetectionLoop : IDisposable
         }
     }
 
-    public DetectionLoop(AppSettings settings, OcrService ocr, InputService input)
+    public DetectionLoop(AppSettings settings, OcrService ocr, InputService input, RodSwitchService rodSwitch)
     {
         _settings = settings;
         _ocr = ocr;
         _input = input;
+        _rodSwitch = rodSwitch;
 
         _fsm = new FishingStateMachine(settings);
         _fsm.RightClickRequested += OnRightClickRequested;
         _fsm.StateChanged += (old, @new) => FishStateChanged?.Invoke(old, @new);
         _fsm.DebugInfo += msg => DebugInfo?.Invoke(msg);
+        _fsm.RodBrokenDetected += OnRodBrokenDetected;
+
+        _rodSwitch.DebugInfo += msg => DebugInfo?.Invoke(msg);
 
         _timer = new DispatcherTimer(
             TimeSpan.FromMilliseconds(settings.PollingIntervalMs),
@@ -54,6 +61,7 @@ public class DetectionLoop : IDisposable
     public void Start()
     {
         if (IsRunning) return;
+        SyncDebugFlags();
         if (!_ocr.IsAvailable)
         {
             var msg = "OCR 引擎不可用。\n请安装中文语言包的光学字符识别组件：\n设置 → 时间和语言 → 语言 → 添加语言 → 中文(简体) → 可选功能 → 光学字符识别";
@@ -62,6 +70,8 @@ public class DetectionLoop : IDisposable
             return;
         }
         _tickCount = 0;
+        _fsm.Reset();
+        _rodSwitch.ResetSlot();
         _timer.Interval = TimeSpan.FromMilliseconds(_settings.PollingIntervalMs);
         _timer.Start();
         IsRunning = true;
@@ -81,7 +91,14 @@ public class DetectionLoop : IDisposable
     public void ResetStateMachine()
     {
         _fsm.Reset();
+        _rodSwitch.ResetSlot();
+        SyncDebugFlags();
         DebugInfo?.Invoke("状态机已重置");
+    }
+
+    private void SyncDebugFlags()
+    {
+        _input.DebugLogInput = _settings.DebugLogInput;
     }
 
     private void OnRightClickRequested(string reason)
@@ -91,9 +108,32 @@ public class DetectionLoop : IDisposable
         _input.SendRightClick();
     }
 
+    private void OnRodBrokenDetected(int _)
+    {
+        var triggered = _rodSwitch.Trigger(_rodSwitch.CurrentSlot);
+        if (!triggered)
+        {
+            DebugInfo?.Invoke("鱼竿已全部损坏 — 请更换");
+            Stop();
+        }
+    }
+
     private void OnTick(object? sender, EventArgs e)
     {
         _tickCount++;
+
+        // 切杆进行中则推进时序，跳过本轮 OCR/FSM
+        if (_rodSwitch.IsActive)
+        {
+            try { _rodSwitch.Tick(); }
+            catch (Exception ex)
+            {
+                Logger.Error("切杆时序异常", ex);
+                DebugInfo?.Invoke($"切杆异常: {ex.Message}");
+                _rodSwitch.ResetSlot();
+            }
+            return;
+        }
 
         try
         {

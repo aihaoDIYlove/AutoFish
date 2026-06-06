@@ -42,7 +42,8 @@ public partial class OverlayWindow : Window
 
         _ocr = new OcrService();
         _input = new InputService(_settings.ClickDurationMs);
-        Detection = new DetectionLoop(_settings, _ocr, _input);
+        var rodSwitch = new RodSwitchService(_settings, _input);
+        Detection = new DetectionLoop(_settings, _ocr, _input, rodSwitch);
 
         Detection.StateChanged += _ => { };
         Detection.TextRecognized += OnTextRecognized;

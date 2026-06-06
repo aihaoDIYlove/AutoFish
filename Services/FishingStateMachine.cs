@@ -1,3 +1,4 @@
+using AutoFish.Helpers;
 using AutoFish.Models;
 
 namespace AutoFish.Services;
@@ -21,6 +22,7 @@ public class FishingStateMachine
 
     public event Action<string>? RightClickRequested;
     public event Action<FishingState, FishingState>? StateChanged;
+    public event Action<int>? RodBrokenDetected;
     public event Action<string>? DebugInfo;
 
     public FishingStateMachine(AppSettings settings)
@@ -109,7 +111,27 @@ public class FishingStateMachine
 
         if (MatchesAny(textLines, _settings.ReelPhrases))
         {
-            TransitionTo(FishingState.ReeledIn, "检测到收回");
+            var brokenPhrases = _settings.BrokenPhrases;
+            var autoSwitch = _settings.AutoSwitchRodEnabled;
+            var hasBroken = brokenPhrases != null && brokenPhrases.Count > 0;
+            var matchedBroken = hasBroken && FuzzyMatchAny(textLines, brokenPhrases!);
+
+            if (_settings.DebugLogInput && hasBroken)
+            {
+                var joined = string.Join(" | ", textLines);
+                Logger.Info($"切杆检测: AutoSwitch={autoSwitch}, BrokenCnt={brokenPhrases!.Count}, "
+                    + $"Matched={matchedBroken}, OCR=[{joined}]");
+            }
+
+            if (autoSwitch && matchedBroken)
+            {
+                RodBrokenDetected?.Invoke(0);
+                TransitionTo(FishingState.Idle, "鱼竿损坏，等待切杆");
+            }
+            else
+            {
+                TransitionTo(FishingState.ReeledIn, "检测到收回");
+            }
         }
     }
 
@@ -144,6 +166,47 @@ public class FishingStateMachine
             {
                 var normalizedPhrase = Normalize(phrase);
                 if (normalized.Contains(normalizedPhrase))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 模糊匹配 — 用于 OCR 可能误识别个别字符的场景（如"物品损坏"被误读为"物品扌员坏"）。
+    /// 只要短语中 ≥70% 的字符按顺序出现在目标文本中就视为匹配。
+    /// </summary>
+    private static bool FuzzyMatchAny(IReadOnlyList<string> textLines, List<string> phrases)
+    {
+        const double threshold = 0.70;
+
+        foreach (var line in textLines)
+        {
+            var normalized = Normalize(line);
+            if (normalized.Length == 0) continue;
+
+            foreach (var phrase in phrases)
+            {
+                var np = Normalize(phrase);
+                if (np.Length == 0) continue;
+
+                // 精确匹配优先
+                if (normalized.Contains(np)) return true;
+
+                // 模糊匹配：检查 phrase 中多少字符按顺序出现在 line 中
+                int matched = 0;
+                int searchFrom = 0;
+                foreach (var ch in np)
+                {
+                    var idx = normalized.IndexOf(ch, searchFrom);
+                    if (idx >= 0)
+                    {
+                        matched++;
+                        searchFrom = idx + 1;
+                    }
+                }
+
+                if ((double)matched / np.Length >= threshold)
                     return true;
             }
         }

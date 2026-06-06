@@ -10,14 +10,19 @@ public static class Win32
     public const int WS_EX_NOACTIVATE = 0x08000000;
 
     public const int INPUT_MOUSE = 0;
+    public const int INPUT_KEYBOARD = 1;
     public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
     public const int MOUSEEVENTF_RIGHTUP = 0x0010;
+    public const uint KEYEVENTF_KEYDOWN = 0x0000;
+    public const uint KEYEVENTF_KEYUP = 0x0002;
 
     public const int MOD_CONTROL = 0x0002;
     public const int MOD_SHIFT = 0x0004;
     public const int MOD_NOREPEAT = 0x4000;
 
     public const int WM_HOTKEY = 0x0312;
+
+    // 结构体布局匹配 Windows x64 默认对齐，sizeof(INPUT)=40
 
     [StructLayout(LayoutKind.Sequential)]
     public struct MOUSEINPUT
@@ -31,10 +36,27 @@ public static class Win32
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public struct KEYBDINPUT
+    {
+        public ushort wVk;
+        public ushort wScan;
+        public uint dwFlags;
+        public uint time;
+        public IntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct INPUTUNION
+    {
+        [FieldOffset(0)] public MOUSEINPUT mi;
+        [FieldOffset(0)] public KEYBDINPUT ki;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public struct INPUT
     {
         public int type;
-        public MOUSEINPUT mi;
+        public INPUTUNION u;
     }
 
     [DllImport("user32.dll", EntryPoint = "GetWindowLongPtrW", SetLastError = true)]

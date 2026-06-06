@@ -10,6 +10,7 @@ public partial class SettingsWindow : Window
 {
     private readonly AppSettings _settings;
     private readonly SettingsService _settingsService;
+    private bool _rodTabLoaded;
 
     public event Action? SettingsSaved;
 
@@ -20,6 +21,18 @@ public partial class SettingsWindow : Window
         _settingsService = settingsService;
 
         Loaded += (_, _) => LoadSettings();
+    }
+
+    /// <summary>首次切到"更换鱼竿"选项卡时填充控件值</summary>
+    private void SettingsTabs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_rodTabLoaded) return;
+        // 检查当前选中项是否为"更换鱼竿"（索引 1）
+        if (SettingsTabs.SelectedIndex != 1) return;
+
+        // 首次选中：控件已由 WPF 创建，现在可以安全填充
+        _rodTabLoaded = true;
+        LoadRodSettings();
     }
 
     private void TitleBar_Drag(object sender, MouseButtonEventArgs e)
@@ -48,6 +61,22 @@ public partial class SettingsWindow : Window
         TxtHookCooldown.Text = _settings.HookCooldownMs.ToString();
     }
 
+    /// <summary>填充切杆选项卡控件值（首次切换时调用）</summary>
+    private void LoadRodSettings()
+    {
+        if (ChkAutoSwitchRod == null) return;
+        ChkAutoSwitchRod.IsChecked = _settings.AutoSwitchRodEnabled;
+        if (ChkDebugLogInput != null) ChkDebugLogInput.IsChecked = _settings.DebugLogInput;
+        if (TxtSwitchRodDelay != null) TxtSwitchRodDelay.Text = _settings.SwitchRodDelayMs.ToString();
+        if (TxtSwitchRodRecast != null) TxtSwitchRodRecast.Text = _settings.SwitchRodRecastMs.ToString();
+        if (TxtBrokenPhrases != null) TxtBrokenPhrases.Text = string.Join(", ", _settings.BrokenPhrases);
+
+        var rods = new[] { ChkRod1, ChkRod2, ChkRod3, ChkRod4, ChkRod5, ChkRod6, ChkRod7, ChkRod8, ChkRod9 };
+        for (int i = 0; i < 9; i++)
+            if (rods[i] != null)
+                rods[i].IsChecked = i < _settings.RodSlots.Count ? _settings.RodSlots[i] : true;
+    }
+
     private void BtnSave_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -68,6 +97,21 @@ public partial class SettingsWindow : Window
             _settings.RecastDelayMs = int.Parse(TxtRecastDelay.Text);
             _settings.ClickDurationMs = int.Parse(TxtClickDuration.Text);
             _settings.HookCooldownMs = int.Parse(TxtHookCooldown.Text);
+
+            // 切杆设置（仅在用户访问过选项卡后读取，否则保持磁盘值）
+            if (_rodTabLoaded)
+            {
+                _settings.AutoSwitchRodEnabled = ChkAutoSwitchRod.IsChecked == true;
+                _settings.DebugLogInput = ChkDebugLogInput.IsChecked == true;
+                _settings.SwitchRodDelayMs = int.Parse(TxtSwitchRodDelay.Text);
+                _settings.SwitchRodRecastMs = int.Parse(TxtSwitchRodRecast.Text);
+                _settings.BrokenPhrases = ParsePhrases(TxtBrokenPhrases.Text);
+
+                var rods = new[] { ChkRod1, ChkRod2, ChkRod3, ChkRod4, ChkRod5, ChkRod6, ChkRod7, ChkRod8, ChkRod9 };
+                _settings.RodSlots.Clear();
+                for (int i = 0; i < 9; i++)
+                    _settings.RodSlots.Add(rods[i].IsChecked == true);
+            }
 
             _settingsService.Save();
             SettingsSaved?.Invoke();
