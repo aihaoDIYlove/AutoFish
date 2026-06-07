@@ -2,9 +2,11 @@
 
 基于 WPF + OCR 的游戏自动钓鱼工具，通过屏幕截图 + Windows 内置 OCR 引擎识别游戏内钓鱼提示文字，模拟右键实现自动提竿和重抛。
 
-## ui展示
+## 展示
 
 ![ui](./img/ui.webp)
+
+[视频/bilibili](https://www.bilibili.com/video/BV1dCEt6HEAJ/)
 
 ## 想直接用？在此下载
 
