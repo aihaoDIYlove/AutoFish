@@ -57,7 +57,7 @@
 ## 系统要求
 
 - Windows 10 19041+ (Windows 10 2004) 或 Windows 11
-- .NET 8 Desktop Runtime
+- .NET 8 Desktop Runtime（https://dotnet.microsoft.com/zh-cn/download/dotnet/8.0）桌面运行时
 - 系统需安装中文 OCR 语言包（中文用户一般默认有安装）
 
 ### 环境验证
